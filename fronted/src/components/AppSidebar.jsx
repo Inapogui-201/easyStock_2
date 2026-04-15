@@ -129,7 +129,7 @@ export default function AppSidebar() {
       {/* ── Footer ─────────────────────────────── */}
       <div className="shrink-0 border-t border-gray-200 p-4 space-y-3">
         {/* User card */}
-        <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="flex items-center gap-3 p-3 bg-gray-100 rounded-lg border border-gray-200">
           <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center shadow-sm">
             <span className="text-sm font-bold text-white">AD</span>
           </div>
