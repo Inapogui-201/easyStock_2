@@ -81,7 +81,7 @@ export default function AppSidebar() {
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-6">
         {NAV_SECTIONS.map(({ label, items }) => (
           <div key={label}>
-            <p className="px-3 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            <p className="px-3 pb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
               {label}
             </p>
             <div className="space-y-1">
@@ -127,7 +127,7 @@ export default function AppSidebar() {
       </nav>
 
       {/* ── Footer ─────────────────────────────── */}
-      <div className="shrink-0 border-t border-gray-200 p-4 space-y-3">
+      <div className="shrink-0 border-t border-gray-100 p-4 space-y-3">
         {/* User card */}
         <div className="flex items-center gap-3 p-3 bg-gray-100 rounded-lg border border-gray-200">
           <div className="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center shadow-sm">
