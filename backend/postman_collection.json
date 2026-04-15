@@ -1,0 +1,400 @@
+{
+  "info": {
+    "_postman_id": "easystock-api-collection",
+    "name": "EasyStock API",
+    "description": "Collection de tests pour l'API EasyStock - Gestion de stock et ventes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "🔐 Auth",
+      "item": [
+        {
+          "name": "Login Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@easystock.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "description": "Connexion admin - retourne JWT token"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Login successful', function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.be.true;",
+                  "    pm.environment.set('token', jsonData.data.token);",
+                  "    console.log('Token saved:', jsonData.data.token);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get Current Admin",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            },
+            "description": "Récupérer les infos de l'admin connecté"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "📦 Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"]
+            },
+            "description": "Liste tous les produits"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "categories"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nouveau Produit Test\",\n  \"price\": 150,\n  \"stock\": 20,\n  \"category\": \"Test\",\n  \"description\": \"Produit de test créé via Postman\",\n  \"lowStockThreshold\": 5\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "{{productId}}"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 200,\n  \"stock\": 25\n}"
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "{{productId}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🛒 Sales",
+      "item": [
+        {
+          "name": "Get All Sales",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/sales",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sales"]
+            },
+            "description": "Historique des ventes"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Sale",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/sales",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "sales"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"clientName\": \"Client Test\",\n  \"clientPhone\": \"0600000000\",\n  \"products\": [\n    { \"productId\": \"{{productId}}\", \"qty\": 2 }\n  ],\n  \"total\": 300,\n  \"paymentMethod\": \"cash\"\n}"
+            },
+            "description": "Créer une vente - stock sera décrémenté automatiquement"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "📊 Stock",
+      "item": [
+        {
+          "name": "Get Stock Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/stock",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Low Stock Alerts",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/stock/alerts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock", "alerts"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Restock Product",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/stock/restock/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "stock", "restock", "{{productId}}"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 10\n}"
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "📈 Dashboard",
+      "item": [
+        {
+          "name": "Get Dashboard Data",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dashboard"]
+            },
+            "description": "Vue d'ensemble complète"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Quick Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/dashboard/stats",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "dashboard", "stats"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🩺 Health Check",
+      "item": [
+        {
+          "name": "Health Status",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Vérifier que le serveur fonctionne"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "productId",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}

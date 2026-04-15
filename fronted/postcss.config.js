@@ -1,0 +1,1 @@
+/* PostCSS configuration will be set up when you install Tailwind CSS */
