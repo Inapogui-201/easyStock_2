@@ -135,9 +135,9 @@ export default function AppSidebar() {
           </div>
           <div className="min-w-0">
             <p className="text-sm font-semibold text-gray-900 truncate">
-              Admin
+              Administrateur
             </p>
-            <p className="text-xs text-gray-500">Administrateur</p>
+            <p className="text-xs text-gray-500">easystock@gmail.com</p>
           </div>
         </div>
 
